@@ -25,7 +25,7 @@
     <version>14</version>
   </parent>
   <groupId>org.apache.spark</groupId>
-  <artifactId>spark-parent_2.10</artifactId>
+  <artifactId>spark-parent_2.11</artifactId>
   <version>1.4.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>Spark Project Parent POM</name>
@@ -151,7 +151,7 @@
     <commons.math3.version>3.4.1</commons.math3.version>
     <test_classpath_file>${project.build.directory}/spark-test-classpath.txt</test_classpath_file>
     <scala.version>2.10.4</scala.version>
-    <scala.binary.version>2.10</scala.binary.version>
+    <scala.binary.version>2.11</scala.binary.version>
     <jline.version>${scala.version}</jline.version>
     <jline.groupid>org.scala-lang</jline.groupid>
     <jodd.version>3.6.3</jodd.version>
@@ -609,7 +609,7 @@
            15.0, which causes runtime incompatibility issues. -->
       <dependency>
         <groupId>com.fasterxml.jackson.module</groupId>
-        <artifactId>jackson-module-scala_2.10</artifactId>
+        <artifactId>jackson-module-scala_2.11</artifactId>
         <version>${fasterxml.jackson.version}</version>
         <exclusions>
           <exclusion>
@@ -1650,6 +1650,18 @@
         <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
       </properties>
     </profile>
+    <profile>
+      <id>hadoop-2.6</id>
+      <properties>
+        <hadoop.version>2.6.0</hadoop.version>
+        <protobuf.version>2.5.0</protobuf.version>
+        <jets3t.version>0.9.3</jets3t.version>
+        <hbase.version>0.98.7-hadoop2</hbase.version>
+        <commons.math3.version>3.1.1</commons.math3.version>
+        <avro.mapred.classifier>hadoop2</avro.mapred.classifier>
+        <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
+      </properties>
+    </profile>
 
     <profile>
       <id>yarn</id>
@@ -1758,6 +1770,10 @@
         <jline.version>2.12.1</jline.version>
         <jline.groupid>jline</jline.groupid>
       </properties>
+      <modules>
+        <module>external/kafka</module>
+        <module>external/kafka-assembly</module>
+      </modules>
     </profile>
 
     <!--
