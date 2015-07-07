@@ -152,6 +152,13 @@ private[spark] class CoarseMesosSchedulerBackend(
         s" --app-id $appId")
       command.addUris(CommandInfo.URI.newBuilder().setValue(uri.get))
     }
+
+    // Add the list of URIs that should be fetched into the sandbox before the executor is started
+    val extraResourceUris = getExtraResourcesToFetch(sc)
+    if (extraResourceUris.isDefined) {
+      command.addAllUris(extraResourceUris.get)
+    }
+
     command.build()
   }
 

@@ -235,4 +235,18 @@ private[mesos] trait MesosSchedulerUtils extends Logging {
       sc.executorMemory
   }
 
+  /**
+   * Get the list of additional files to be fetched into the mesos executor sandbox
+   * @param sc SparkContext to use to get the configuration
+   * @return List of CommandInfo#URI objects to be included into the mesos TaskInfo
+   */
+  def getExtraResourcesToFetch(sc: SparkContext): Option[Seq[CommandInfo.URI]] = {
+    for {
+      propValue <- sc.conf.getOption("spark.executor.additionalUris")
+      uri <- propValue.split(',')
+    } yield {
+      CommandInfo.URI.newBuilder().setValue(uri).build()
+    }
+  }
+
 }

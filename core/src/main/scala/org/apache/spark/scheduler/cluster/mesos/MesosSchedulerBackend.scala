@@ -115,6 +115,13 @@ private[spark] class MesosSchedulerBackend(
       command.setValue(s"cd ${basename}*; $prefixEnv ./bin/spark-class $executorBackendName")
       command.addUris(CommandInfo.URI.newBuilder().setValue(uri.get))
     }
+
+    // Add the list of URIs that should be fetched into the sandbox before the executor is started
+    val extraResourceUris = getExtraResourcesToFetch(sc)
+    if (extraResourceUris.isDefined) {
+      command.addAllUris(extraResourceUris.get)
+    }
+
     val cpus = Resource.newBuilder()
       .setName("cpus")
       .setType(Value.Type.SCALAR)
